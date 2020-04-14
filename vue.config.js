@@ -20,7 +20,7 @@ module.exports = {
       .set('@', path.resolve(__dirname, './src'))
   },
   configureWebpack: (config) => {    
-  if (process.env.NODE_ENV === 'production') {      
+  if (process.env.NODE_ENV === 'production') {
       // 生产环境
       config.mode = 'production'
     } else {      
@@ -29,19 +29,13 @@ module.exports = {
     }
   },  
   // css相关配置
-  css: {    
-    // 是否分离css（插件ExtractTextPlugin）
-    extract: true,    
-    // 是否开启 CSS source maps
-    sourceMap: false,   
-    // css预设器配置项
+  css: {
+    extract: true,
+    sourceMap: false,
     loaderOptions: {
-        scss: {
-            prependData: `@import "./src/styles/main.scss";`
-        }
-    },    
-    // 是否启用 CSS modules for all css / pre-processor files.
-  },  
+      
+    },
+  }, 
   // 是否使用 thread-loader
   parallel: require('os').cpus().length > 1, 
   // PWA 插件相关配置
