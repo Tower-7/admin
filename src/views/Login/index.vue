@@ -15,8 +15,8 @@
                 <el-form-item prop="password">
                     <el-input type="password" v-model="ruleForm.password" autocomplete="off" maxlength=18></el-input>
                 </el-form-item>
-                <label for="">验证码</label>
-                <el-row :gutter="20">
+                <label for="" v-show="isActive==1">验证码</label>
+                <el-row :gutter="20"  v-show="isActive==1">
                     <el-col :span="15"><el-input v-model.number="ruleForm.code" maxlength=6></el-input></el-col>
                     <el-col :span="9"><el-button class="block" type="primary">获取验证码</el-button></el-col>
                 </el-row>
@@ -55,17 +55,20 @@ export default {
             }
             
         };
-        var code = (rule, value, callback) => {
-            let reg = /^[a-z0-9]{6}$/
-            if (!value) {
-                callback(new Error('请输入验证码'));
-            }else if(!reg.test(value)){
-                callback(new Error('验证码格式不正确'));
-            }
-            else{
-                callback()
-            }
-        };
+        if(this.isActive==0){
+            var code = (rule, value, callback) => {
+                let reg = /^[a-z0-9]{6}$/
+                if (!value) {
+                    callback(new Error('请输入验证码'));
+                }else if(!reg.test(value)){
+                    callback(new Error('验证码格式不正确'));
+                }
+                else{
+                    callback()
+                }
+            };
+        }
+        
         return {
             menuTab: [
                 {txt: '登陆'},
@@ -75,7 +78,6 @@ export default {
             ruleForm: {
                 username: '',
                 password: '',
-                age: ''
             },
             rules: {
                 username: [
@@ -96,11 +98,12 @@ export default {
     methods: {
         toggleMenu(index){
             this.isActive = index
+
         },
          submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+              console.log(this.ruleForm)
           } else {
             console.log('error submit!!');
             return false;
@@ -119,6 +122,7 @@ export default {
     .login-wrap {
         width: 330px;
         margin: auto;
+        padding-top: 150px;
     }
     .menu-tab {
         display: flex;
