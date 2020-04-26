@@ -51,7 +51,7 @@ module.exports = {
     // http 代理配置
     proxy: {      
       '/api': {
-        target: 'http://www.web-jshtml.cn/productapi',
+        target: 'https://edu.ishuber.com',
         changeOrigin: true,
         pathRewrite: {          
             '^/api': ''

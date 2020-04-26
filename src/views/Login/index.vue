@@ -31,6 +31,7 @@
     </div>
 </template>
 <script>
+import { sign_up } from '../../api/login.js';
 export default {
     name: 'login',
     data(){
@@ -103,7 +104,12 @@ export default {
          submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-              console.log(this.ruleForm)
+              sign_up(this.ruleForm)
+              .then((res)=>{
+                  console.log(res)
+              }).catch((err)=>{
+                  console.log(err)
+              })
           } else {
             console.log('error submit!!');
             return false;
