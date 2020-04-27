@@ -1,7 +1,8 @@
 import axios from 'axios'
 
+let baseURL = process.env.NODE_ENV==='development'?'/api/admin':'/admin'
 const instance = axios.create({
-    baseURL: '/api/admin',
+    baseURL: baseURL,
     timeout: 5000
 })
 
@@ -12,7 +13,7 @@ instance.interceptors.request.use(function(config){
 })
 
 instance.interceptors.response.use(function(response) {
-    return response;
+    return response.data;
 },function(err) {
     return Promise.reject(err)
 })

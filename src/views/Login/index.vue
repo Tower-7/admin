@@ -31,7 +31,6 @@
     </div>
 </template>
 <script>
-import { sign_up } from '../../api/login.js';
 export default {
     name: 'login',
     data(){
@@ -99,17 +98,36 @@ export default {
     methods: {
         toggleMenu(index){
             this.isActive = index
-
         },
          submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-              sign_up(this.ruleForm)
+            if(this.isActive == 0){
+                this.$store.dispatch('sign_in',this.ruleForm)
+                .then(res=>{
+                    if(res.status == 0){
+                        this.$message({
+                            message: res.msg,
+                            type: 'success'
+                        });
+                    }
+                    else{
+                        this.$message.error(res.msg);
+                    }
+                     
+                })
+                .catch(err=>{
+
+                })
+            }else{
+            this.$store.dispatch('sign_up',this.ruleForm)
               .then((res)=>{
                   console.log(res)
               }).catch((err)=>{
                   console.log(err)
               })
+            }
+            
           } else {
             console.log('error submit!!');
             return false;
